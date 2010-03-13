@@ -3,6 +3,7 @@
 require 'rss/1.0'
 require 'rss/2.0'
 require 'open-uri'
+require 'fileutils'
 
 
 rssfeeds = [ "http://feeds.feedburner.com/RubyInside", "http://feeds.feedburner.com/ElcCodeFeed"]
@@ -14,10 +15,10 @@ dir = time.strftime("%Y%m%d%H%M%S")
 FileUtils.mkdir_p "#{dir}/full"
 FileUtils.mkdir_p "#{dir}/thumbs"
 
-feed = 0
+
 for i in rssfeeds
   
-    #  feed="http://feeds.feedburner.com/RubyInside"
+      
        content=""
        open(i) do |f| content = f.read end
 
@@ -29,12 +30,12 @@ for i in rssfeeds
     while rsscount < rss.items.size
       
       #replace with webkit2png 
-    	#print "creating a screenshot of . . . ", rss.items[rsscount].link, "\n\n"
-    	put feed.rsscount
+    	print "creating a screenshot of . . . ", rss.items[rsscount].link, "\n\n"
+    
      	rsscount += 1
 
     end
-  feed += 1
+
   
 end
 
