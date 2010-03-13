@@ -30,8 +30,12 @@ for i in rssfeeds
     while rsscount < rss.items.size
       
       #replace with webkit2png 
-    	print "creating a screenshot of . . . ", rss.items[rsscount].link, "\n\n"
-    
+      url = rss.items[rsscount].link
+      print "#{url} \n\n"
+      system("./webkit2png.py -D #{dir}/full -F #{url}")
+      system("./webkit2png.py -D #{dir}/thumbs -T #{url}")
+      #move png to correct location 
+      #generate index + javascript
      	rsscount += 1
 
     end
