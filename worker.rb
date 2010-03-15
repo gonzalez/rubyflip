@@ -6,14 +6,14 @@ require 'open-uri'
 require 'fileutils'
 
 
-rssfeeds = [ "http://feeds.feedburner.com/RubyInside", "http://feeds.feedburner.com/ElcCodeFeed"]
+rssfeeds = [ "http://feeds.feedburner.com/RubyInside", "http://feeds.feedburner.com/ElcCodeFeed", "http://news.ycombinator.com/rss"]
 
 
 #mkdir to store our screenshots
 time = Time.now
 dir = time.strftime("%Y%m%d%H%M%S")
 FileUtils.mkdir_p "#{dir}/full"
-FileUtils.mkdir_p "#{dir}/thumbs"
+#FileUtils.mkdir_p "#{dir}/thumbs"
 
 
 for i in rssfeeds
@@ -32,9 +32,9 @@ for i in rssfeeds
       #replace with webkit2png 
       url = rss.items[rsscount].link
       print "#{url} \n\n"
-      system("./webkit2png.py -D #{dir}/full -F #{url}")
-      system("./webkit2png.py -D #{dir}/thumbs -T #{url}")
-      #move png to correct location 
+      system("./webkit2png.py -W 700-H 700 -D #{dir}/full -F #{url}")
+      
+     
       #generate index + javascript
      	rsscount += 1
 
@@ -42,7 +42,7 @@ for i in rssfeeds
 
   
 end
-
+FileUtils.mv("#{dir}", "public/images/#{dir}")
 
 
 
