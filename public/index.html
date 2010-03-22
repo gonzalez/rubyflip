@@ -6,16 +6,24 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>RubyFlip</title>
 
-<!-- #shadowbox js  -->
-<link rel="stylesheet" type="text/css" href="javascript/shadowbox/shadowbox.css">
-<script type="text/javascript" src="javascript/shadowbox/shadowbox.js"></script>
-<script type="text/javascript">
-Shadowbox.init();
-</script>
 
+<link rel="stylesheet" type="text/css" href="javascript/slideshow/css/slideshow.css" media="screen" />
+	<script type="text/javascript" src="javascript/slideshow/js/mootools.js"></script>
+	<script type="text/javascript" src="javascript/slideshow/js/slideshow.js"></script>
 
-<!-- mootools yui compress -->
-	<script type="text/javascript" src="javascript/mootools.js"></script>
+	<script type="text/javascript">		
+	//<![CDATA[
+	  window.addEvent('domready', function(){
+	    var data = {
+	      '1.png': { caption: 'Volcano Asención in Ometepe, Nicaragua.' }, 
+	      '2.png': { caption: 'A Ceibu tree.' }, 
+	      '3.png': { caption: 'The view from Volcano Maderas.' }, 
+	      '4.png': { caption: 'Beer and ice cream.' }
+	    };
+	    var myShow = new Slideshow('show', data, {controller: true, height:1000, width: 975,hu: 'images/20100315020615/full'});
+	  });
+	//]]>
+	</script>
 
 
   <!-- Framework CSS -->
@@ -39,25 +47,25 @@ Shadowbox.init();
 		<h2 class="alt">Flip through ruby news items using your keyboard arrows.</h2>
 		<hr>
 		
-		<div class="span-4">
+	<!-->	<div class="span-4">
 				  
 				 <p>
 				      		  <input type="text" class="title" name="dummy0" id="dummy0" value="search - coming soon"></p>
 				
-				</div>
+				</div> -->
 
-				<div class="span-16">
-				  <h6>SpaceX says Falcon 9 rocket test fires is a success</h6>
+				<div class="span-16 slideshow" id="show">
+				
+				  <img src="images/20100315020615/full/1.png" alt="title goes here." />
+				 
+				</divv>
 
-				  <img src="images/20100315020615/full/newsyahoocomsnm20100314sc_nmus_space_business-full.png" width="600" rel="shadowbox">
-				</div>
-
-				<div class="span-4 last">
+		<!-->		<div class="span-4 last">
 					<a href="#" class="button positive">
 					     Bookmark  
 					  </a>
 				
-				</div>
+				</div> -->
 <div class="column span-24">About | Twitter | Why</div>
 
 
