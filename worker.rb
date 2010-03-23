@@ -7,7 +7,7 @@ require 'fileutils'
 
 
 #rssfeeds = [ "http://feeds.feedburner.com/RubyInside", "http://feeds.feedburner.com/ElcCodeFeed"]
-rssfeeds = [ "http://feeds.feedburner.com/RubyInside"]
+rssfeeds = [ "http://feeds.feedburner.com/ElcCodeFeed"]
 
 
 #mkdir to store our screenshots
@@ -116,10 +116,10 @@ index.puts("  \}\;
 
 
 		
-<div class=\"span-24 footer prepend-top\"><h4 class=\"alt\">
+<div class=\"span-24 footer prepend-top\">
 	<div class=\"spam-24\">
 		
-		<a href=\"/about.html\">About</a> | <a href=\"http://twitter.com/rubyflip\">Twitter</a> | <a  href=\"/why.html\">Why</a> </h4>
+		<a href=\"/about.html\">About</a> | <a href=\"http://twitter.com/rubyflip\">Twitter</a> | <a  href=\"/why.html\">Why</a> 
 	</div>
 </div>
 
