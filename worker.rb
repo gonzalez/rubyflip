@@ -4,6 +4,7 @@ require 'rss/1.0'
 require 'rss/2.0'
 require 'open-uri'
 require 'fileutils'
+require 'net/ftp' 
 
 
 #rssfeeds = [ "http://feeds.feedburner.com/RubyInside", "http://feeds.feedburner.com/ElcCodeFeed"]
@@ -140,8 +141,20 @@ index.puts("  \}\;
 
 
 index.close
+#for local testing
 FileUtils.mv("#{dir}", "public/images/#{dir}")
 FileUtils.mv("index.#{dir}", "public/index.html")
+
+
+#FTP the goods index + images
+ftp = Net::FTP::new("ftp.ruby-lang.org","username", "password")
+ftp.chdir("www")
+ftp.putbinaryfile("index.#{dir}","index.html")
+ftp.chdir("images")
+
+ftp.close
+
+
 
 
 
