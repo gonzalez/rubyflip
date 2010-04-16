@@ -1,17 +1,26 @@
 #!/usr/bin/ruby 
 # parse the rss feed and create the screenshots
 require 'rubygems'
+
+#parse rss feed formats
 require 'rss/1.0'
 require 'rss/2.0'
+
+#get url
 require 'open-uri'
+
+#create index and image directories
 require 'fileutils'
+
+#transfer index and image files
 require 'net/ftp' 
+
 require 'RMagick'
 include Magick
 
-rssfeeds = ['http://z.about.com/6/o/m/ruby_p2.xml']
+#rssfeeds = ['http://z.about.com/6/o/m/ruby_p2.xml']
 #rssfeeds = ["http://feeds2.feedburner.com/Rubyflow"]
-#rssfeeds = ["http://news.ycombinator.com/rss"]
+rssfeeds = ["http://ruby.alltop.com/rss/"]
 #rssfeeds = [ "http://feeds.feedburner.com/RubyInside"]
 #rssfeeds = [ "http://feeds.feedburner.com/ElcCodeFeed"]
 
@@ -62,28 +71,36 @@ for i in rssfeeds
       #iterate through the urls
       while rsscount < rss.items.size
       
-      url = rss.items[rsscount].link
+        url = rss.items[rsscount].link
  
-      
-      #generate screenshot using webkit2png ("http://www.paulhammond.org/webkit2png/")
-      system("./webkit2png.py -o #{rsscount} -H 600 -W 950 -D #{dir} -F #{url}")
-     
-      #crop the screenshot , imagemagick
-      image=Image.read("#{dir}/#{rsscount}.png").first
-     
-      #(x,y,height,width)
-      face=image.crop!(0,0,960,600)
-      face.write("#{dir}/#{rsscount}.png")
+        
+          #generate screenshot using webkit2png ("http://www.paulhammond.org/webkit2png/")
+          status = `./webkit2png.py -o #{rsscount} -H 600 -W 950 -D #{dir} -F #{url}`
+          puts "my #{status}"
+          
+            #some pages and other file types included in the feed, cause errors and we can't create a screenshot of (mp3,etc) so we skip those 
+            if status.include? "wrong"
+              puts "rescuing from a webkit2png error"
+              rsscount += 1
+              next
+            end
          
-      #generate js 
-      index.puts("\'#{rsscount}" + ".png\':" + " \{ caption: \'" + rss.items[rsscount].title + "\'\, href: \'" + rss.items[rsscount].link + "\'\},") 
      
-      rsscount += 1
-
-    end
+          #crop the screenshot , imagemagick
+          image=Image.read("#{dir}/#{rsscount}.png").first
+     
+          #(x,y,height,width)
+          face=image.crop!(0,0,960,600)
+          face.write("#{dir}/#{rsscount}.png")
+         
+          #generate js 
+          index.puts("\'#{rsscount}" + ".png\':" + " \{ caption: \'" + rss.items[rsscount].title + "\'\, href: \'" + rss.items[rsscount].link + "\'\},") 
+     
+          rsscount += 1
+      end
     
-    #need a feed+rss counter feed2.item1
-    #rsscount += 1
+      #need a feed+rss counter feed2.item1
+      #rsscount += 1
 
 end
 
@@ -160,7 +177,7 @@ index.close
 
 #FTP the goods index + images
 
-#ftp = Net::FTP.new("yourhost.com","username", "password")
+ftp = Net::FTP.new("yourhost.com","username", "password")
 ftp.passive = true
 ftp.chdir("www")
 ftp.putbinaryfile("index.#{dir}","index.html")
