@@ -18,6 +18,14 @@ require 'net/ftp'
 require 'RMagick'
 include Magick
 
+
+#escape single quotes
+class String
+  def escape_single_quotes
+    self.gsub(/'/, "\\\\'")
+  end
+end
+
 #rssfeeds = ['http://z.about.com/6/o/m/ruby_p2.xml']
 #rssfeeds = ["http://feeds2.feedburner.com/Rubyflow"]
 rssfeeds = ["http://ruby.alltop.com/rss/"]
@@ -94,7 +102,7 @@ for i in rssfeeds
           face.write("#{dir}/#{rsscount}.png")
          
           #generate js 
-          index.puts("\'#{rsscount}" + ".png\':" + " \{ caption: \'" + rss.items[rsscount].title + "\'\, href: \'" + rss.items[rsscount].link + "\'\},") 
+          index.puts("\'#{rsscount}" + ".png\':" + " \{ caption: \'" + rss.items[rsscount].title.escape_single_quotes + "\'\, href: \'" + rss.items[rsscount].link + "\'\},") 
      
           rsscount += 1
       end
@@ -176,7 +184,6 @@ index.close
 
 
 #FTP the goods index + images
-
 ftp = Net::FTP.new("yourhost.com","username", "password")
 ftp.passive = true
 ftp.chdir("www")
