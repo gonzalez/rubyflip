@@ -186,8 +186,9 @@ index.puts("  \}\;
 index.close
 
 
-#FTP the goods index + images
-#ftp = Net::FTP.new("yourhost.com","username", "password")
+#FTP the goods index + images //change me
+
+ftp = Net::FTP.new("yourhost.com","username", "password")
 ftp.passive = true
 ftp.chdir("www")
 ftp.putbinaryfile("index.#{dir}","index.html")
