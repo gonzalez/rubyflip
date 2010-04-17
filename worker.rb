@@ -100,7 +100,10 @@ for i in rssfeeds
           #(x,y,height,width)
           face=image.crop!(0,0,960,600)
           face.write("#{dir}/#{rsscount}.png")
-         
+          
+          #optimize the png
+          puts "optimizing #{dir}/#{rsscount}.png"
+          `optipng #{dir}/#{rsscount}.png`
           #generate js 
           index.puts("\'#{rsscount}" + ".png\':" + " \{ caption: \'" + rss.items[rsscount].title.escape_single_quotes + "\'\, href: \'" + rss.items[rsscount].link + "\'\},") 
      
@@ -115,7 +118,7 @@ end
 #finalize index
 
 index.puts("  \}\;
-    var myShow = new Slideshow(\'show\', data, {loop: false,pause: 0,preload: true,captions: true, fast: 2, height: 600, width: 950,hu: \'images/" + "#{dir}" +"\/'});
+    var myShow = new Slideshow(\'show\', data, {delay: 3000,random: true,loop: false,pause: true,preload: true,captions: true,fast: 2, height: 600, width: 950,hu: \'images/" + "#{dir}" +"\/'});
   \}\)\;
 \/\/\]\]>
 <\/script>
@@ -143,7 +146,7 @@ index.puts("  \}\;
 
 			<h1 class=\"loud\">RubyFlip</h1>
 			<hr>
-			<h2 class=\"alt\">Flip through ruby news items using your arrows.</h2>
+			<h2 class=\"alt\">Flip through ruby news items using your arrow keys.</h2>
 			<hr>
 		</div>
 		
@@ -184,7 +187,7 @@ index.close
 
 
 #FTP the goods index + images
-ftp = Net::FTP.new("yourhost.com","username", "password")
+#ftp = Net::FTP.new("yourhost.com","username", "password")
 ftp.passive = true
 ftp.chdir("www")
 ftp.putbinaryfile("index.#{dir}","index.html")
